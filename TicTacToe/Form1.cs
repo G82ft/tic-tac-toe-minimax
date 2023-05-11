@@ -2,16 +2,16 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
 namespace TicTacToe
 {
     public partial class TicTacToe : Form
     {
-        [DllImport(@"..\..\lib\Minimax.dll", CallingConvention = CallingConvention.Cdecl)]
+        const string path = @"..\..\..\x64\Debug\Minimax.dll";
+        [DllImport(path, CallingConvention = CallingConvention.Cdecl)]
         static extern int getWinner(int[,] field);
-        [DllImport(@"..\..\lib\Minimax.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(path, CallingConvention = CallingConvention.Cdecl)]
         static extern int getNextMove(int[,] field, ref int x, ref int y);
-        [DllImport(@"..\..\lib\Minimax.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(path, CallingConvention = CallingConvention.Cdecl)]
         static extern bool isDraw(int[,] field);
         int[,] field =
         {
@@ -43,6 +43,31 @@ namespace TicTacToe
             x2y2.Name = "22";
         }
 
+        private void Clear()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0;  j < 3; j++)
+                {
+                    buttons[i, j].Text = "";
+                    field[i, j] = 0;
+                }
+            }
+
+            turn.Text = "X";
+        }
+
+        private void AskRestart(string prompt)
+        {
+            if (MessageBox.Show(prompt, "Tic Tac Toe") != DialogResult.OK)
+            {
+                Close();
+                return;
+            }
+
+            Clear();
+        }
+
         private void click(object sender, EventArgs e)
         {
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
@@ -61,13 +86,12 @@ namespace TicTacToe
 
             if (getWinner(field) == 1)
             {
-                MessageBox.Show("Xs win!", "Tic Tac Toe");
-                Close();
+                AskRestart("Xs win!");
                 return;
-            } else if (isDraw(field))
+            }
+            else if (isDraw(field))
             {
-                MessageBox.Show("Draw!", "Tic Tac Toe");
-                Close();
+                AskRestart("Draw!");
                 return;
             }
 
@@ -83,23 +107,9 @@ namespace TicTacToe
 
             if (getWinner(field) == -1)
             {
-                MessageBox.Show("Os win!", "Tic Tac Toe");
-                Close();
+                AskRestart("Os win!");
                 return;
-
             }
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j ++)
-                {
-                    Console.Write(field[i, j]);
-                    Console.Write(buttons[i, j].Text);
-                    Console.Write(" ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
 
             turn.Text = "X";
         }

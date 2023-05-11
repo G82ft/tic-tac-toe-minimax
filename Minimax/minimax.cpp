@@ -80,6 +80,23 @@ int*** getActions(int** field, int& size, int turn = -1) {
     return actions;
 }
 
+void deallocate(int*** array3d, int xSize, int ySize, int zSize) {
+    for (int x = 0; x < xSize; x++) {
+        for (int y = 0; y < ySize; y++) {
+            delete[] array3d[x][y];
+        }
+        delete[] array3d[x];
+    }
+    delete[] array3d;
+}
+
+void deallocate(int** array2d, int xSize, int ySize) {
+    for (int x = 0; x < xSize; x++) {
+        delete[] array2d[x];
+    }
+    delete[] array2d;
+}
+
 int evaluate(int** field, int turn = -1) {
     int fieldArray[3][3] = {
         {0, 0, 0},
@@ -107,6 +124,8 @@ int evaluate(int** field, int turn = -1) {
             value = max(value, evaluate(actions[i], turn * -1));
         }
 
+        deallocate(actions, size, 3, 3);
+
         return value;
     }
     else {
@@ -118,25 +137,10 @@ int evaluate(int** field, int turn = -1) {
             value = min(value, evaluate(actions[i], turn * -1));
         }
 
+        deallocate(actions, size, 3, 3);
+
         return value;
     }
-}
-
-void deallocate(int*** array3d, int xSize, int ySize, int zSize) {
-    for (int x = 0; x < xSize; x++) {
-        for (int y = 0; y < ySize; y++) {
-            delete[] array3d[x][y];
-        }
-        delete[] array3d[x];
-    }
-    delete[] array3d;
-}
-
-void deallocate(int** array2d, int xSize, int ySize) {
-    for (int x = 0; x < xSize; x++) {
-        delete[] array2d[x];
-    }
-    delete[] array2d;
 }
 
 void getNextMove(int field[3][3], int& x, int& y) {
@@ -170,8 +174,10 @@ void getNextMove(int field[3][3], int& x, int& y) {
             x = j;
             y = k;
 
-            //deallocate(actions, 9, 3, 3);
-            //deallocate(newField, 3, 3);
+            deallocate(actions, size, 3, 3);
+            deallocate(fieldCopy, 3, 3);
+
+            return;
         }
     }
 }
