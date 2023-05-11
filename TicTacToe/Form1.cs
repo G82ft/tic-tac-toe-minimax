@@ -59,7 +59,7 @@ namespace TicTacToe
 
         private void AskRestart(string prompt)
         {
-            if (MessageBox.Show(prompt, "Tic Tac Toe") != DialogResult.OK)
+            if (MessageBox.Show(prompt, "Tic Tac Toe", MessageBoxButtons.RetryCancel) != DialogResult.OK)
             {
                 Close();
                 return;
@@ -114,6 +114,9 @@ namespace TicTacToe
             turn.Text = "X";
         }
 
-
+        private void Restart(object sender, EventArgs e)
+        {
+            AskRestart("Do you want to restart?");
+        }
     }
 }

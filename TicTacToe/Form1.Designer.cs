@@ -39,6 +39,7 @@
             this.x1y0 = new System.Windows.Forms.Button();
             this.x0y0 = new System.Windows.Forms.Button();
             this.turn = new System.Windows.Forms.Label();
+            this.restart = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -188,11 +189,24 @@
             this.turn.Text = "X";
             this.turn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // restart
+            // 
+            this.restart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.restart.Location = new System.Drawing.Point(12, 9);
+            this.restart.Margin = new System.Windows.Forms.Padding(0);
+            this.restart.Name = "restart";
+            this.restart.Size = new System.Drawing.Size(20, 20);
+            this.restart.TabIndex = 2;
+            this.restart.Text = "🔃";
+            this.restart.UseVisualStyleBackColor = true;
+            this.restart.Click += new System.EventHandler(this.Restart);
+            // 
             // TicTacToe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 291);
+            this.Controls.Add(this.restart);
             this.Controls.Add(this.turn);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TicTacToe";
@@ -215,6 +229,7 @@
         private System.Windows.Forms.Button x1y0;
         private System.Windows.Forms.Button x0y0;
         private System.Windows.Forms.Label turn;
+        private System.Windows.Forms.Button restart;
     }
 }
 
